@@ -1,18 +1,44 @@
 import numpy as np
+import scipy.constants as sc
 
 data = np.loadtxt('sun.dat')
 
-x = data[:,0]
-y = data[:,1]
-z = data[:,2]
-vx = data[:,3]
-vy = data[:,4]
-vz = data[:,5]
+x = data[:,0]*1.4960e11
+y = data[:,1]*1.4960e11
+z = data[:,2]*1.4960e11
+vx = data[:,3]*1.4960e11/(365.25*24.*3600)
+vy = data[:,4]*1.4960e11/(365.25*24.*3600)
+vz = data[:,5]*1.4960e11/(365.25*24.*3600)
+
+v = (vx**2+vy**2+vz**2)**0.5
+r = (x**2+y**2+z**2)**0.5
 
 N = 20000
-deltam = 0.1
+deltam = 26.
 deltae = 0.1
-m_0 = 1e6
+logm_0 = 27.
 e_0 = 1.
+logm = np.array([logm_0])
+e = np.array([e_0])
 
-def p(
+def p(logm,e,r,v):
+    return -0.5*np.sum((np.log(v)-(0.5*(e-1)*np.log(r)+0.5*np.log(sc.G)+0.5*logm))**2)
+
+for i in range(1,N-1):
+    Um = np.random.random()*2*deltam-deltam
+    Ue = np.random.random()*2*deltae-deltae
+    logm_new = logm[-1] + Um
+    e_new = e[-1] + Ue
+    alpha = min(1.,np.exp(p(logm_new,e_new,r,v)-p(logm[-1],e[-1],r,v)))
+    u = np.random.random()
+    if(u<=alpha):
+        logm = np.append(logm,[logm_new])
+        e = np.append(e,[e_new])
+    else:
+        logm = np.append(logm,[logm[-1]])
+        e = np.append(e,[e[-1]])
+
+logM = np.median(logm)
+a = np.median(e)
+
+print(logM,a)

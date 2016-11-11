@@ -15,7 +15,7 @@ X = np.array([X_0])
 Y = np.array([Y_0])
 
 def p(Xe,Ye,x,y,t):
-    return -0.5*np.sum(0.5*(t-(((x-Xe)**2+(y-Ye)**2)**0.5)/5.)**2)
+    return -0.5*np.sum((t-(((x-Xe)**2+(y-Ye)**2)**0.5)/5.)**2)
 
 for i in range(1,N-1):
     UX = np.random.random()*2*deltaX-deltaX
@@ -31,7 +31,5 @@ for i in range(1,N-1):
         X = np.append(X,[X[-1]])
         Y = np.append(Y,[Y[-1]])
 
-xe = np.median(X)
-ye = np.median(Y)
-
-print(xe,ye)
+plt.scatter(X[10000:],Y[10000:])
+plt.show()
