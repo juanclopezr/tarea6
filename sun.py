@@ -14,9 +14,9 @@ v = (vx**2+vy**2+vz**2)**0.5
 r = (x**2+y**2+z**2)**0.5
 
 N = 20000
-deltam = 26.
+deltam = 0.1
 deltae = 0.1
-logm_0 = 27.
+logm_0 = 1.
 e_0 = 1.
 logm = np.array([logm_0])
 e = np.array([e_0])
@@ -38,7 +38,7 @@ for i in range(1,N-1):
         logm = np.append(logm,[logm[-1]])
         e = np.append(e,[e[-1]])
 
-logM = np.median(logm)
+logM = np.log10(np.exp(np.median(logm)))
 a = np.median(e)
 
-print(logM,a)
+print('mass ',logM,' exponent ',a)

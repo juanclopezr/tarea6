@@ -1,0 +1,10 @@
+import numpy as np
+
+data = np.loadtxt('sun.dat')
+
+x = data[:,0]
+y = data[:,1]
+z = data[:,2]
+vx = data[:,3]
+vy = data[:,4]
+vz = data[:,5]
