@@ -9,13 +9,13 @@ t = data[:,2]
 N = 20000
 deltaX = 0.1
 deltaY = 0.1
-X_0 = 1.
-Y_0 = 1.
+X_0 = 0.
+Y_0 = 0.
 X = np.array([X_0])
 Y = np.array([Y_0])
 
 def p(Xe,Ye,x,y,t):
-    return -0.5*np.sum((t-0.2*(((x-Xe)**2+(y-Ye)**2)**0.5))**2)
+    return -0.5*np.sum((t-0.5*(((x-Xe)**2+(y-Ye)**2)**0.5))**2)
 
 for i in range(1,N-1):
     UX = np.random.random()*2*deltaX-deltaX
